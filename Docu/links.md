@@ -5,6 +5,7 @@ MISC
 listOfStrings1 = ['Hi'] * 20
 
 MATPLOT
+https://matplotlib.org/stable/api/animation_api.html
 https://matplotlib.org/stable/gallery/animation/simple_anim.html
 https://matplotlib.org/stable/gallery/animation/rain.htmlcsn hur mycket
 https://matplotlib.org/stable/users/explain/event_handling.html
