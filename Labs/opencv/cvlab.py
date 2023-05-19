@@ -1,3 +1,4 @@
+# https://www.geeksforgeeks.org/text-detection-and-extraction-using-opencv-and-ocr/
 import cv2
 import pytesseract
  
@@ -6,6 +7,7 @@ pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesserac
  
 # Read image from which text needs to be extracted
 #img = cv2.imread("sample4.jpg")
+# img = cv2.imread("2110.jpg")
 img = cv2.imread("92201_3.webp")
  
 # Preprocessing the image starts
