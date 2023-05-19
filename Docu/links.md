@@ -4,6 +4,9 @@ https://www.morrislaw.se/artiklar/web-scraping-ur-ett-juridiskt-perspektiv/
 MISC
 listOfStrings1 = ['Hi'] * 20
 
+PARSER (kanske alternativ)
+https://docs.python.org/3/library/html.parser.html
+
 MATPLOT
 https://matplotlib.org/stable/api/animation_api.html
 https://matplotlib.org/stable/gallery/animation/simple_anim.html
