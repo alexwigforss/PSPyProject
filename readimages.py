@@ -1,6 +1,12 @@
 # https://www.scrapingbee.com/blog/download-image-python/
 import requests
 import shutil
+import cv2
+import numpy as np
+import pytesseract
+
+pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+
 
 from main import test_images as ti
 
@@ -20,6 +26,7 @@ def downloadImgs():
 # downloadImgs()
 import os
 list_of_paths = []
+list_of_fnames = []
 def getPaths():
     global list_of_paths
     rpath = os.getcwd() + '\\' + 'bilder'
@@ -27,20 +34,61 @@ def getPaths():
     for e in content:
         if os.path.isfile(os.getcwd() + '\\bilder\\' + e):
             list_of_paths.append(os.getcwd() + '\\bilder\\' + e)
+            list_of_fnames.append(e.replace('jpg','txt'))
 getPaths()
 
-import cv2
-import numpy
+# https://jdhao.github.io/2019/09/11/opencv_unicode_image_path/
+def prepOcr(path):
+    img = cv2.imdecode(np.fromfile(path, dtype=np.uint8),
+                   cv2.IMREAD_UNCHANGED)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-os.system('cls')
-i=0
-for e in list_of_paths:
-    # Applicera Threshold
-    print(e)
-    img = cv2.imread(e,0)
-    ret,thresh3 = cv2.threshold(img,120,255,cv2.THRESH_BINARY)
-    # Spara till subkattalog bilder/p
-    cv2.imwrite(str(i) + '.jpg', e)
-    i += 1
+    ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU | cv2.THRESH_BINARY_INV)
+    rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (18, 18))
+    dilation = cv2.dilate(thresh, rect_kernel, iterations = 1)
+    contours, hierarchy = cv2.findContours(dilation, cv2.RETR_EXTERNAL,
+                                                 cv2.CHAIN_APPROX_NONE)
+    im2 = img.copy()
+    return contours,im2
 
 
+# # A text file is created and flushed
+def createOrFlushFile(fname):
+    file = open(fname, "w+")
+    file.write("")
+    file.close()
+
+def getChars(contours, im2, filename):
+    createOrFlushFile(filename)
+    file = open(filename, "a")
+    for cnt in contours:
+        x, y, w, h = cv2.boundingRect(cnt)
+    # Cropping the text block for giving input to OCR
+        cropped = im2[y:y + h, x:x + w]
+    # Open the file in append mode
+     
+    # Apply OCR on the cropped image
+        text = pytesseract.image_to_string(cropped)
+    # https://pyimagesearch.com/2020/08/03/tesseract-ocr-for-non-english-languages/
+    # text = pytesseract.image_to_string(cropped,lang = 'swe')
+        if len(text) > 5:
+            print(len(text),text)
+            # Appending the text into file
+            file.write(text.replace('\n', ' '))
+            file.write("\n")
+     
+    # Close the file
+    file.close
+
+paths = ['bilder/Höstmorot_9396_3.jpg','bilder/Kålrot_92201_3.jpg']
+for e in enumerate(list_of_paths):
+    contours, im2 = prepOcr(e[1])
+    getChars(contours, im2, list_of_fnames[e[0]])
+"""
+TBD
+[ ] Om katalog inte finns skapa
+[ ] Katalog för texten också, sparas nu i roten.
+"""
+#paths = ['bilder/Höstmorot_9396_3.jpg','bilder/Kålrot_92201_3.jpg']
+#contours, im2 = prepOcr(list_of_paths[0])
+#getChars(contours, im2, 'filename.txt')
