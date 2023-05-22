@@ -12,10 +12,10 @@
     #    (Grobarhet)
 
 class Plant:    
-    def __init__(self, name, x, y, plant_month, growth_days):
+    def __init__(self, name, x_dist_cm, y_row_cm, plant_month, growth_days):
         self.name = name
-        self.x = x
-        self.y = y
+        self.x = x_dist_cm
+        self.y = y_row_cm
         self.plant_month = plant_month
         self.growth_time = growth_days
     # Area för radavstånd resp spridd sådd:
@@ -23,5 +23,4 @@ class Plant:
         self.scatter_space = ((self.x + self.y) / 2) * ((self.x + self.y) / 2)
 
 # Importera dessa för att experimentera med matplotlib:
-TestPlant = Plant("morot", 4, 6, 6, 30)
-TestPlant2 = Plant("gurka", 2, 4, 6, 60)
+TestPlants = [Plant("morot", 40, 60, 6, 30), Plant("gurka", 20, 40, 6, 60)]
