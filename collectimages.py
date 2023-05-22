@@ -1,9 +1,6 @@
-# > pip install beautifulsoup4
 from main import test_links
 import requests
 from bs4 import BeautifulSoup
-
-# FÖR ATT HÄMTA BILD-URL FRÅN VARJE SIDA: requests + beautiful soup
 
 start_url = "https://www.impecta.se"
 image_url = []
@@ -34,6 +31,3 @@ def scrape_name():
     print("name_str: " + name_str)
 
 scrape_name()
-
-#<a rev="/img/bilder/artiklar/zoom/89001_3.jpg?constrain=1&amp;w=850&amp;m=1651481439" OK as is
-#<a href="/bilder/artiklar/zoom/89001_3.jpg?m=1651481439" OK as is
