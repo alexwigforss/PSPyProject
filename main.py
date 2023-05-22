@@ -9,3 +9,9 @@ test_links = ["https://www.impecta.se/froer/gronsaker/honungsmelon-honey-dew",
               "https://www.impecta.se/froer/gronsaker/hostmorot-st-valery",
               "https://www.impecta.se/froer/gronsaker/jattelok-ailsa-craig",
               "https://www.impecta.se/froer/gronsaker/kalrot-champion"]
+
+# REPL som tar info om längd + bredd på odlingsområdet (cultivation_area)
+# scatter eller rad-sådd?
+# vilken växt + hur stor andel (procent)
+# Returnerar kvarvarande andel, input nästa växt
+

@@ -1,3 +1,4 @@
+# > pip install beautifulsoup4
 from main import test_links
 import requests
 from bs4 import BeautifulSoup
