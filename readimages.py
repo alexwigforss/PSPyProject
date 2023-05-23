@@ -4,13 +4,14 @@ import shutil
 import cv2
 import numpy as np
 import pytesseract
-
+import os
 pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-
 
 from main import test_images as ti
 
 def downloadImgs():
+    if not os.path.exists('./bilder'):
+        os.makedirs('./bilder')
     # Om/bilder inte finns skapa /bilder
     for e in ti:
         url = ti[e]
@@ -24,6 +25,7 @@ def downloadImgs():
         else:
             print('Image Couldn\'t be retrieved: ',res.status_code,e)
 # downloadImgs()
+
 import os
 list_of_paths = []
 list_of_fnames = []
@@ -54,13 +56,13 @@ def prepOcr(path):
 
 # # A text file is created and flushed
 def createOrFlushFile(fname):
-    file = open(fname, "w+")
+    file = open('./text/'+fname, "w+",encoding='utf8')
     file.write("")
     file.close()
 
 def getChars(contours, im2, filename):
-    createOrFlushFile(filename)
-    file = open(filename, "a")
+    # createOrFlushFile(filename)
+    file = open('./text/'+filename, "a",encoding='utf8')
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)
     # Cropping the text block for giving input to OCR
@@ -69,8 +71,8 @@ def getChars(contours, im2, filename):
      
     # Apply OCR on the cropped image
         text = pytesseract.image_to_string(cropped)
-    # https://pyimagesearch.com/2020/08/03/tesseract-ocr-for-non-english-languages/
-    # text = pytesseract.image_to_string(cropped,lang = 'swe')
+        # https://pyimagesearch.com/2020/08/03/tesseract-ocr-for-non-english-languages/
+        # text = pytesseract.image_to_string(cropped,lang = 'swe')
         if len(text) > 5:
             print(len(text),text)
             # Appending the text into file
@@ -80,14 +82,20 @@ def getChars(contours, im2, filename):
     # Close the file
     file.close
 
-paths = ['bilder/Höstmorot_9396_3.jpg','bilder/Kålrot_92201_3.jpg']
+if not os.path.exists('./text'):
+    os.makedirs('./text')
+
+# Teckenavläsning
 for e in enumerate(list_of_paths):
     contours, im2 = prepOcr(e[1])
     getChars(contours, im2, list_of_fnames[e[0]])
+
+# [ ] Classinmatning
+
 """
 TBD
-[ ] Om katalog inte finns skapa
-[ ] Katalog för texten också, sparas nu i roten.
+[x] Om katalog inte finns skapa
+[x] Katalog för texten också, sparas nu i roten.
 """
 #paths = ['bilder/Höstmorot_9396_3.jpg','bilder/Kålrot_92201_3.jpg']
 #contours, im2 = prepOcr(list_of_paths[0])
