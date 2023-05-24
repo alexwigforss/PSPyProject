@@ -1,3 +1,4 @@
+# > pip install Scrapy
 from webcrawl import *
 
 url_start = "https://www.impecta.se"
@@ -24,3 +25,39 @@ while len(url_page) < 50:
 
 
     #front_r = requests.get(urlfront) 
+
+# Kodexempel på iterator från 
+# https://www.octoparse.com/blog/build-web-crawler-with-python
+'''
+# td in HTML is 'table data'
+data_iterator = iter(soup.find_all('td'))
+# data_iterator is the iterator of the table
+# This loop will keep repeating till there is
+# data available in the iterator
+while True:
+try:
+country = next(data_iterator).text
+confirmed = next(data_iterator).text
+deaths = next(data_iterator).text
+continent = next(data_iterator).text
+data.append((
+country,
+confirmed,
+deaths,
+continent
+))
+# StopIteration exception is raised when
+# there are no more elements left to
+# iterate through
+except StopIteration:
+break
+# Sort the data by the number of confirmed cases
+data.sort(key = lambda row: row[1], reverse = True)
+'''
+
+# På hemsidan, copy inner html tar endast koden under/innanför den markerade raden
+# copy outer HTML inkluderar den markerade raden
+'''<a href="/sv/froer?page=2" rel="nofollow">
+<span class="pag-text">Nästa</span>
+<span class="pag-icon">»</span>
+</a>'''
