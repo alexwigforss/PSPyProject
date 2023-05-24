@@ -24,3 +24,13 @@ class Plant:
 
 # Importera dessa för att experimentera med matplotlib:
 TestPlants = [Plant("morot", 40, 60, 6, 9), Plant("gurka", 20, 40, 6, 10)]
+INDEX = 0
+class Land:
+    def __init__(self, label, width, height):
+        global INDEX
+        self.index = INDEX
+        INDEX +=1
+        self.label = str(label)
+        self.width = float(width)
+        self.height = float(height)
+TestLand = Land('grönsakslandet',80,120)

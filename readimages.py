@@ -39,6 +39,16 @@ def getPaths():
             list_of_fnames.append(e.replace('jpg','txt'))
 getPaths()
 
+def getTxtFileNames():
+    global list_of_paths
+    result = []
+    rpath = os.getcwd() + '\\' + 'text'
+    for e in os.listdir(rpath):
+        if os.path.isfile(os.getcwd() + '\\text\\' + e):
+            # list_of_paths.append(os.getcwd() + '\\bilder\\' + e)
+            result.append(e)
+    return result
+
 # https://jdhao.github.io/2019/09/11/opencv_unicode_image_path/
 def prepOcr(path):
     img = cv2.imdecode(np.fromfile(path, dtype=np.uint8),
@@ -61,7 +71,7 @@ def createOrFlushFile(fname):
     file.close()
 
 def getChars(contours, im2, filename):
-    # createOrFlushFile(filename)
+    # createOrFlushFile(filename) # Uncoment to empty files before writing
     file = open('./text/'+filename, "a",encoding='utf8')
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)
@@ -82,13 +92,14 @@ def getChars(contours, im2, filename):
     # Close the file
     file.close
 
-if not os.path.exists('./text'):
-    os.makedirs('./text')
+if __name__ == '__main__':
+    if not os.path.exists('./text'):
+        os.makedirs('./text')
 
-# Teckenavläsning
-for e in enumerate(list_of_paths):
-    contours, im2 = prepOcr(e[1])
-    getChars(contours, im2, list_of_fnames[e[0]])
+    # Teckenavläsning
+    for e in enumerate(list_of_paths):
+        contours, im2 = prepOcr(e[1])
+        getChars(contours, im2, list_of_fnames[e[0]])
 
 # [ ] Classinmatning
 
