@@ -37,7 +37,7 @@ class LandAnimation:
         self.legend = plt.legend(bbox_to_anchor =(0.25, 1.15), ncol = 2)
         # https://www.w3schools.com/python/matplotlib_labels.asp
         self.title = plt.title("Namnet På Landet")
-        self.ax.add_patch(plt.Rectangle((1, 1), 2, 6,
+        self.ax.add_patch(plt.Rectangle((0, 0), tl.width, tl.height,
                                         fill = False),)
         # specify the location of (left,bottom),width,height
 
@@ -45,7 +45,7 @@ class LandAnimation:
         #                 fill = False,
         #                 color = "purple",
         #                 linewidth = 2)
-        
+
         # TODO och plotta ut dem en i sänder
         # i=0
         # for e in y:
