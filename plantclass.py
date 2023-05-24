@@ -3,8 +3,8 @@
 #        Radavstånd (y)
  #       Plantavstånd (x)
   #      Medelavstånd
-   #     Såtid (första)
-    #    Skördetid (dagar)
+   #     Såtid (första månad)
+    #    Skördetid (första månad)
 #    Senare alternativ:
  #       Portionsmängd
   #      Perenn/ettårig
@@ -19,11 +19,10 @@ class Plant:
         self.plant_month = plant_month
         self.harvest_month = harvest_month
     # Area för radavstånd resp spridd sådd:
-        self.row_space = self.x * self.y
-        self.scatter_space = ((self.x + self.y) / 2) * ((self.x + self.y) / 2)
+        self.mid_dist = (self.x + self.y) / 2
 
 # Importera dessa för att experimentera med matplotlib:
-TestPlants = [Plant("morot", 4, 6, 6, 9), Plant("gurka", 6, 8, 6, 10)]
+TestPlants = [Plant("morot", 4, 30, 6, 9), Plant("gurka", 6, 30, 6, 10)]
 INDEX = 0
 class Land:
     def __init__(self, label, width,height):
