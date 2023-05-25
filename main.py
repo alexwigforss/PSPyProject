@@ -1,6 +1,7 @@
 # > pip install beautifulsoup4
 # > pip install opencv-python
 
+from plantclass import Land
 
 test_images = {"Slanggurka 'Beth Alpha'": "https://www.impecta.se/bilder/artiklar/zoom/9145_3.jpg", 
                "Höstmorot 'De Saint-Valery'": "https://www.impecta.se/bilder/artiklar/zoom/9396_3.jpg", 
@@ -55,9 +56,10 @@ if __name__ == '__main__':
                                                                 # TODO escape-button för att avbryta programmet?
     # Odlingsutrymme
     print("~~~ Välkommen till planterings-planeraren ~~~")      #TODO exception handling, fel input
-    land_x = float(input("Hur stort utrymme har du att odla på? \nLängd: "))
-    land_y = float(input("Bredd: "))
-    land_area = land_x * land_y
+    land_x = float(input("Hur stort utrymme har du att odla på? \nLängd (cm): "))
+    land_y = float(input("Bredd (cm): "))
+    land_name = input("Namnge odlingslandet: ")
+    Land(land_name, land_x, land_y)
     
     # Växter och andel
     print("Nu ska du få ange vilka sorts växter du vill odla och hur mycket av varje sort i procent")

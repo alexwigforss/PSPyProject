@@ -3,8 +3,8 @@
 #        Radavstånd (y)
  #       Plantavstånd (x)
   #      Medelavstånd
-   #     Såtid (första)
-    #    Skördetid (dagar)
+   #     Såtid (första månad)
+    #    Skördetid (första månad)
 #    Senare alternativ:
  #       Portionsmängd
   #      Perenn/ettårig
@@ -19,6 +19,7 @@ class Plant:
         self.plant_month = plant_month
         self.harvest_month = harvest_month
     # Area för radavstånd resp spridd sådd:
+        self.mid_dist = (self.x + self.y) / 2
         self.row_space = self.x * self.y
         self.mid = (self.x + self.y) / 2
         self.scatter_space = ((self.x + self.y) / 2) * ((self.x + self.y) / 2)
