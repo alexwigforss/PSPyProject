@@ -25,7 +25,7 @@ class Plant:
 
 # Importera dessa för att experimentera med matplotlib:
 #                Plant(namn,radavst,plantavst,såmånad,skördemånad)
-Test_Database = [Plant("morot", 4, 30, 6, 9),
+Test_Database = [Plant("morot", 30, 40, 6, 9),
                  Plant("gurka", 20, 30, 6, 10),
                  Plant("melon", 50, 50, 6, 10),
                  Plant("kålrot", 20, 50, 6, 10)]

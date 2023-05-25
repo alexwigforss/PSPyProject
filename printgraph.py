@@ -14,19 +14,23 @@ from matplotlib.animation import FuncAnimation
 
 # plt.ion()
 class LandAnimation:
-    def __init__(self, land = '', plants=[]):
+    def __init__(self, land = '', plants=[],percent=[],rowdist=True):
         self.land = land
         self.qoute = len(plants)
         # print('qoute = ', self.qoute)
-        self.size = 100
         self.fig, self.ax = plt.subplots()
         self.line, = self.ax.plot(0, 0)
         self.plants = plants
+        self.percent=percent
         self.ListOfPlants = []
         L_INDEX = 0
         for each in plants:
-            YSPACE = plants[L_INDEX].y
-            XSPACE = plants[L_INDEX].x
+            if rowdist:
+                YSPACE = plants[L_INDEX].y
+                XSPACE = plants[L_INDEX].x
+            elif not rowdist:
+                YSPACE = plants[L_INDEX].mid_dist
+                XSPACE = plants[L_INDEX].mid_dist
                 # width = x = hori, height=y=vert
             nr_of_hori=int(land.width/XSPACE) # rows
             nr_of_vert=int(land.height/YSPACE/self.qoute) # cols
@@ -52,32 +56,33 @@ class LandAnimation:
         # https://stackoverflow.com/questions/4700614/how-to-put-the-legend-outside-the-plot
         self.legend = plt.legend(bbox_to_anchor =(0.25, 1.15), ncol = 2)
         # https://www.w3schools.com/python/matplotlib_labels.asp
-        self.title = plt.title("Namnet På Landet")
+        self.title = plt.title(land.label)
         # https://datavizpyr.com/how-to-draw-a-rectangle-on-a-plot-in-matplotlib/
         # https://www.statology.org/matplotlib-rectangle/
         self.ax.add_patch(plt.Rectangle((0, 0), self.land.height, self.land.width, fill = False),)
 
-    def animate(self,i): # a.k.a update
-        global size
+    def animate(self,frame_nr): # a.k.a update
         q = 0
         for each in self.ListOfPlants:
-            if i < (self.plants[q].x)*10:
+            if frame_nr < (self.plants[q].x)*20:
                 # https://www.digitalocean.com/community/tutorials/numpy-ones-in-python
-                each.set_sizes(np.ones(self.qoute)*i)
+                each.set_sizes(np.ones(self.qoute)*frame_nr)
             q += 1
         tup = self.line,self.title
         # https://datagy.io/python-append-to-tuple/
         for each in self.ListOfPlants:
             tup = tup + (each,)
         return tup
-#               growing_area, chosen_plants, distribution_row, nr_of_seeds
-#def assembleLand(land, cplants, percent_list, nr_of_seeds):
+
 def assembleLand(land, complete_list, rowdist): #complete_list innehåller [ [PlantObjekt, int(antal_fröer)], [PlantObjekt, int(antal_ fröer)] ]
     plant= []
+    percent=[]
     for each_plant in complete_list:
         plant.append(each_plant[0])
-    la = LandAnimation(land,plant)
-    ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50)
+        percent.append(each_plant[1]/100)        #procent av antal frön
+    print(percent)
+    la = LandAnimation(land,plant,percent,rowdist)
+    ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50, frames=30)
     plt.show()
 
 if __name__ == '__main__':

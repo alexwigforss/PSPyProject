@@ -26,6 +26,6 @@ def GetNumberOfSeeds(item, growing_area):
 def NumberOfSeeds(chosen_plants, growing_area):
     nr_of_seeds = []
     for item in chosen_plants:
-        nr_of_seeds.append([item[0], GetNumberOfSeeds(item, growing_area)])    
+        nr_of_seeds.append([item[0], GetNumberOfSeeds(item, growing_area), item[1]/100])    
     return nr_of_seeds # Returnerar förhoppningsvis lista med list[Plant(växtens objekt), antalFrön]
 
