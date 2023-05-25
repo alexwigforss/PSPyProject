@@ -24,10 +24,14 @@ class Plant:
         self.scatter_space = ((self.x + self.y) / 2) * ((self.x + self.y) / 2)
 
 # Importera dessa för att experimentera med matplotlib:
-TestPlants = [Plant("morot", 4, 3, 6, 9), Plant("gurka", 20, 30, 6, 10)]
+#                Plant(namn,radavst,plantavst,såmånad,skördemånad)
+Test_Database = [Plant("morot", 4, 30, 6, 9),
+                 Plant("gurka", 20, 30, 6, 10),
+                 Plant("melon", 50, 50, 6, 10),
+                 Plant("kålrot", 20, 50, 6, 10)]
 INDEX = 0
 class Land:
-    def __init__(self, label, width,height):
+    def __init__(self, label, width,height): # width = x, height=y
         global INDEX
         self.index = INDEX
         INDEX +=1

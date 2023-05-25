@@ -10,14 +10,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 #import matplotlib.animation as animation
 from matplotlib.animation import FuncAnimation
+# from plantclass import TestLand as tl
 
 # plt.ion()
 class LandAnimation:
-    #size = 100
     def __init__(self, land = '', plants=[]):
         self.land = land
         self.qoute = len(plants)
-        print('qoute = ', self.qoute)
+        # print('qoute = ', self.qoute)
         self.size = 100
         self.fig, self.ax = plt.subplots()
         self.line, = self.ax.plot(0, 0)
@@ -27,16 +27,18 @@ class LandAnimation:
         for each in plants:
             YSPACE = plants[L_INDEX].y
             XSPACE = plants[L_INDEX].x
-            nr_of_hori=int(80/XSPACE) # rows
-            nr_of_vert=int(120/YSPACE/self.qoute) # cols
+                # width = x = hori, height=y=vert
+            nr_of_hori=int(land.width/XSPACE) # rows
+            nr_of_vert=int(land.height/YSPACE/self.qoute) # cols
+            
             #print('nr_of_vert ',nr_of_vert)
             #print('YSpace: ' , YSPACE,'XSpace: ' , XSPACE)
 
-            Y_START = 120/self.qoute*L_INDEX
+            Y_START = land.height/self.qoute*L_INDEX
             y = np.full((nr_of_hori, nr_of_vert), 0)
             for each in y:
                 each[:] = np.arange(Y_START + YSPACE/2, Y_START + YSPACE*nr_of_vert+(YSPACE/2), YSPACE, dtype=float)
-
+# width = x = hori, height=y=vert
             x = np.full((nr_of_hori, nr_of_vert), 0)
             i = 1
             for each in x:
@@ -68,13 +70,19 @@ class LandAnimation:
         for each in self.ListOfPlants:
             tup = tup + (each,)
         return tup
-
-def assembleLand(land, plants, percent_list):
-    pass
+#               growing_area, chosen_plants, distribution_row, nr_of_seeds
+#def assembleLand(land, cplants, percent_list, nr_of_seeds):
+def assembleLand(land, complete_list, rowdist): #complete_list innehåller [ [PlantObjekt, int(antal_fröer)], [PlantObjekt, int(antal_ fröer)] ]
+    plant= []
+    for each_plant in complete_list:
+        plant.append(each_plant[0])
+    la = LandAnimation(land,plant)
+    ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50)
+    plt.show()
 
 if __name__ == '__main__':
     from plantclass import TestLand as tl
-    from plantclass import TestPlants as tps
+    from plantclass import Test_Database as tps
     la = LandAnimation(tl,tps)
     ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50)
     plt.show()

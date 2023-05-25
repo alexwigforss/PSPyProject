@@ -2,8 +2,9 @@
 # > pip install opencv-python
 # > pip install numpy
 
-from plantclass import Land
+import plantclass
 import calculations
+
 
 test_images = {"Slanggurka 'Beth Alpha'": "https://www.impecta.se/bilder/artiklar/zoom/9145_3.jpg", 
                "Höstmorot 'De Saint-Valery'": "https://www.impecta.se/bilder/artiklar/zoom/9396_3.jpg", 
@@ -22,11 +23,11 @@ def Try_name():
     while(True):
         name_input = str(input("Växtens namn: "))
         name_exists = []
-        for name in test_images.keys():			#TODO: byt till faktiska listan
-            if name_input.lower() in name.lower():
-                name_exists.append(name)
+        for plant in plantclass.Test_Database:			#TODO: byt till faktiska listan
+            if name_input.lower() in plant.name.lower():
+                name_exists.append(plant)
         if len(name_exists) == 1:
-            print(f"Du har valt {name_exists[0]}")
+            print(f"Du har valt {str(name_exists[0].name)}")
             return name_exists[0]
         elif len(name_exists) == 0: 
             print("Växten är inte tillgänglig, försök med ett annat namn.")
@@ -34,14 +35,14 @@ def Try_name():
         elif len(name_exists) > 1:
             print(f"Hittade flera liknande alternativ: ")
             for i in name_exists:
-                    print("    ", i)
+                    print("    ", i.name)
             print("Vilket menade du?")
             continue
     
 def Try_percentage(percent, plant):    
     while(True):
         try:
-            amount = float(input(f"Andel plantor av {plant} du vill sätta i procent: "))
+            amount = float(input(f"Andel plantor av {plant.name} du vill sätta i procent: "))
             if(percent-amount < 0):
                 raise Exception("Du kan inte odla mer än 100 procent.")
         except Exception as e:
@@ -53,10 +54,10 @@ def Try_percentage(percent, plant):
 def Set_land():
     print("~~~ Välkommen till planterings-planeraren ~~~")      #TODO exception handling, fel input
     land_x = float(input("Hur stort utrymme har du att odla på? \nLängd (cm): "))
-    land_y = float(input("Bredd (cm): "))
+    land_y = float(input("Djup (cm): "))
     land_name = input("Namnge odlingslandet: ")
-    growing_area = Land(land_name, land_x, land_y)
-    return growing_area
+    return plantclass.Land(land_name, land_x, land_y)
+
 
 def Choose_plants(Try_name, Try_percentage):
     to_plant = []
@@ -66,10 +67,10 @@ def Choose_plants(Try_name, Try_percentage):
         #Ange ett plantnamn:
         plant = Try_name() 
         #Ange procentandelen:
-        amount = Try_percentage(percent, plant)
-        to_plant.append([plant, amount])
+        percentage = Try_percentage(percent, plant)
+        to_plant.append([plant, percentage])
         #Fortsätt loop om det finns plats för fler växter
-        percent -= amount
+        percent -= percentage
         if(percent == 0): 
             return to_plant
         else:
@@ -81,10 +82,8 @@ def Set_distribution():
         dist_ans = input("Ange 'r' för rad-sådd, och 's' för spridd sådd: ").lower()
         if (dist_ans == 'r'):
             return True
-            break
         elif(dist_ans == 's'):
             return False
-            break
         else: continue
 
 if __name__ == '__main__':
@@ -92,17 +91,15 @@ if __name__ == '__main__':
     # Odlingsutrymme
     growing_area = Set_land()
     # Växter och andel
-    chosen_plants = Choose_plants(Try_name, Try_percentage)
+    chosen_plants = Choose_plants(Try_name, Try_percentage) #[Plant-object, procentmängd]
     # Fördelningssätt
     distribution_row = False #activate later: Set_distribution()
     # Gör beräkningar för fröer
     nr_of_seeds = calculations.NumberOfSeeds(chosen_plants, growing_area)
     # {'name': 'morot', 'x': 4, 'y': 3, 'plant_month': 6, 'harvest_month': 9, 'mid_dist': 3.5, 'row_space': 12, 'scatter_space': 12.25}
-    pg.assembleLand(growing_area, chosen_plants, percent_list):
-
-
-
+    # TODO Ev Skriva ut hur många fröer nr_of_seeds[x][1]
+    pg.assembleLand(growing_area, nr_of_seeds, distribution_row)
+    #pg.assembleLand(growing_area, chosen_plants, distribution_row, nr_of_seeds)
 
     # TODO escape-button för att avbryta programmet?    
 
-    
