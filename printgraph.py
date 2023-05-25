@@ -34,6 +34,7 @@ class LandAnimation:
                 # width = x = hori, height=y=vert
             nr_of_hori=int(land.width/XSPACE) # rows
             nr_of_vert=int(land.height/YSPACE/self.qoute) # cols
+            #nr_of_vert=int(land.height/YSPACE*self.percent[L_INDEX]) # cols
             
             #print('nr_of_vert ',nr_of_vert)
             #print('YSpace: ' , YSPACE,'XSpace: ' , XSPACE)
@@ -61,6 +62,11 @@ class LandAnimation:
         # https://www.statology.org/matplotlib-rectangle/
         self.ax.add_patch(plt.Rectangle((0, 0), self.land.height, self.land.width, fill = False),)
 
+    def Calculate_plant_area(self, growing_area_y, number_of_seeds,plant):
+        seed_occupation_in_y = plant.mid_dist * number_of_seeds
+        occupation_in_percent = seed_occupation_in_y / growing_area_y
+        return occupation_in_percent
+
     def animate(self,frame_nr): # a.k.a update
         q = 0
         for each in self.ListOfPlants:
@@ -77,12 +83,14 @@ class LandAnimation:
 def assembleLand(land, complete_list, rowdist): #complete_list innehåller [ [PlantObjekt, int(antal_fröer)], [PlantObjekt, int(antal_ fröer)] ]
     plant= []
     percent=[]
+    occupation_in_percent = []
     for each_plant in complete_list:
         plant.append(each_plant[0])
         percent.append(each_plant[1]/100)        #procent av antal frön
+        occupation_in_percent.append(Calculate:)
     print(percent)
     la = LandAnimation(land,plant,percent,rowdist)
-    ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50, frames=30)
+    ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50) # frames
     plt.show()
 
 if __name__ == '__main__':
