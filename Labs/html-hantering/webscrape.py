@@ -1,29 +1,26 @@
 from bs4 import BeautifulSoup
 import requests
+import gatherlinks
 
 if __name__ == "__main__":
-    url_start = "https://www.impecta.se"
-    url_page = []
-    urlfront = "https://www.impecta.se/sv/froer"
-
-    page_html = requests.get(urlfront) 
-    soup2 = BeautifulSoup(page_html.text, 'html.parser') #alt
-
-    #url_next = 
-    while(True):
-        try: 
-            page=1
-            for i in range(38):
-                url = f"https://www.impecta.se/sv/froer?page={page}"
+    def Crawl_frontpage(url_front = "https://www.impecta.se/sv/froer"):
+        url_start = "https://www.impecta.se"
+    # Läs in första översiktssidan på hemsidan
+        url = url_front
+        while(True):
+            try: 
                 page_html2 = requests.get(url) 
                 soup = BeautifulSoup(page_html2.text, 'html.parser')
+            # Med html-soupkoden för aktuell översiktssida skrapas adresserna till alla 50 artiklar
+                gatherlinks.Get_fifty_pages(soup)
+            # Kollar om översiktssidan har en "Nästa"-knapp, hämtar url till nästa sida
                 p = soup.find('span', {'class':"pag-text"})
-                print(p.contents[0].text)
-                page+=1
-            print(page)
-        except AttributeError:
-            break
-
+                url_next = p.parent.attrs['href']
+            # Går till nästa översiktssida, för ny loop
+                url = url_start+url_next
+            except AttributeError:
+                break
+    # pass arg limit=50 in find()
     '''
     code_headers = code_main.findAll('h2')
 
@@ -43,40 +40,10 @@ if __name__ == "__main__":
     # KÄLLA (inspiration): https://www.youtube.com/watch?v=MH3641s3Roc : Pythonology - "Web Scraping to CSV | Multiple Pages Scraping with Beautiful Soup"
 
 
-        #front_r = requests.get(urlfront) 
-
-    # td in HTML is 'table data'
-    data_iterator = iter(soup.find_all(''))
-    # data_iterator is the iterator of the table
-    # This loop will keep repeating till there is
-    # data available in the iterator
-    while True:
-    try:
-    country = next(data_iterator).text
-    confirmed = next(data_iterator).text
-    deaths = next(data_iterator).text
-    continent = next(data_iterator).text
-    data.append((
-    country,
-    confirmed,
-    deaths,
-    continent
-    ))
-    # StopIteration exception is raised when
-    # there are no more elements left to
-    # iterate through
-    except StopIteration:
-    break
-    # Sort the data by the number of confirmed cases
-    data.sort(key = lambda row: row[1], reverse = True)
-
-    <a href="/sv/froer?page=2" rel="nofollow">
-    <span class="pag-text">
-    </a>'''
 
 # Kodexempel på iterator från 
 # https://www.octoparse.com/blog/build-web-crawler-with-python
-'''
+
 # td in HTML is 'table data'
 data_iterator = iter(soup.find_all('td'))
 # data_iterator is the iterator of the table
