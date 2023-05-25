@@ -21,7 +21,6 @@ class Plant:
     # Area för radavstånd resp spridd sådd:
         self.mid_dist = (self.x + self.y) / 2
         self.row_space = self.x * self.y
-        self.mid = (self.x + self.y) / 2
         self.scatter_space = ((self.x + self.y) / 2) * ((self.x + self.y) / 2)
 
 # Importera dessa för att experimentera med matplotlib:
