@@ -23,7 +23,6 @@ def GetNumberOfSeeds(item, land_area):
 #Antalet beräknas på fördelning i procent
     number_of_seeds = percent * seed_per_land 		
     int_seed_number = int(number_of_seeds)
-
     return int_seed_number
 
 # Lagra namn och antal frö av valda sorter i en dict key=växtnamn, value=antal frön
@@ -31,7 +30,5 @@ def NumberOfSeeds(chosen_plants, land_area):
     nr_of_seeds = {}
     for item in chosen_plants:
         nr_of_seeds[item[0]] = GetNumberOfSeeds(item, land_area)    
-    return nr_of_seeds
-
-print("Totalt behövs:", NumberOfSeeds(TEST_to_plant, TEST_land_area), "frön.")
+    return nr_of_seeds # Returnerar {Frönamn: Antal frön}
 

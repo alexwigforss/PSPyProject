@@ -1,7 +1,9 @@
 # > pip install beautifulsoup4
 # > pip install opencv-python
+# > pip install numpy
 
 from plantclass import Land
+import calculations
 
 test_images = {"Slanggurka 'Beth Alpha'": "https://www.impecta.se/bilder/artiklar/zoom/9145_3.jpg", 
                "Höstmorot 'De Saint-Valery'": "https://www.impecta.se/bilder/artiklar/zoom/9396_3.jpg", 
@@ -48,20 +50,15 @@ def Try_percentage(percent, plant):
         else:
             return amount
 
-if __name__ == '__main__':
-    # Input från användaren:
-    to_plant = []
-    land_area = 0
-    distribution_row = False
-                                                                # TODO escape-button för att avbryta programmet?
-    # Odlingsutrymme
+def Set_land():
     print("~~~ Välkommen till planterings-planeraren ~~~")      #TODO exception handling, fel input
     land_x = float(input("Hur stort utrymme har du att odla på? \nLängd (cm): "))
     land_y = float(input("Bredd (cm): "))
     land_name = input("Namnge odlingslandet: ")
-    Land(land_name, land_x, land_y)
-    
-    # Växter och andel
+    growing_area = Land(land_name, land_x, land_y)
+
+def Choose_plants(Try_name, Try_percentage):
+    to_plant = []
     print("Nu ska du få ange vilka sorts växter du vill odla och hur mycket av varje sort i procent")
     percent = 100
     while(percent > 0):
@@ -70,23 +67,35 @@ if __name__ == '__main__':
         #Ange procentandelen:
         amount = Try_percentage(percent, plant)
         to_plant.append([plant, amount])
-        #Fortsätt loop
+        #Fortsätt loop om det finns plats för fler växter
         percent -= amount
-        if(percent == 0): break
-        print(f"Du har angett {100-percent}% av årets odlingar. Ange nästa planta.")
-    
-    # Fördelningssätt
+        if(percent == 0): 
+            return to_plant
+        else:
+            print(f"Du har angett {100-percent}% av årets odlingar. Ange nästa planta.")
+
+def Set_distribution():
     print("Nu ska du få välja om du vill plantera dina växter i rader eller med spridd sådd")
     while(True):
         dist_ans = input("Ange 'r' för rad-sådd, och 's' för spridd sådd: ").lower()
         if (dist_ans == 'r'):
-            distribution_row = True
+            return True
             break
         elif(dist_ans == 's'):
-            distrubution_row = False
+            return False
             break
         else: continue
+
+if __name__ == '__main__':
+    # Odlingsutrymme
+    growing_area = Set_land()
+    # Växter och andel
+    chosen_plants = Choose_plants(Try_name, Try_percentage)
+    # Fördelningssätt
+    distribution_row = False #activate later: Set_distribution()
+    # Gör beräkningar för fröer
+    nr_of_seeds = calculations.NumberOfSeeds(chosen_plants, growing_area)
+
+                                                                # TODO escape-button för att avbryta programmet?        
+
     
-    print("\nDu planterar: ")
-    for i in to_plant:
-        print(f"    {i[1]}%  {i[0]}")

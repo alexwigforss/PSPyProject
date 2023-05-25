@@ -23,7 +23,8 @@ if __name__ == "__main__":
         return url
 
     # Hämta artikelsida och artikelnamn ur gatherlinks-samlingen
-    for key, value in article_pages.items():
-       image_url[key] = Scrape_picture(value)
+    def Get_article(url):
+        for key, value in article_pages.items():
+            image_url[key] = Scrape_picture(value)
 
 
