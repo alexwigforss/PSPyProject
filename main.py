@@ -59,7 +59,7 @@ if __name__ == '__main__':
     land_x = float(input("Hur stort utrymme har du att odla på? \nLängd (cm): "))
     land_y = float(input("Bredd (cm): "))
     land_name = input("Namnge odlingslandet: ")
-    Land(land_name, land_x, land_y)
+    land = Land(land_name, land_x, land_y)
     
     # Växter och andel
     print("Nu ska du få ange vilka sorts växter du vill odla och hur mycket av varje sort i procent")
