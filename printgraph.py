@@ -69,7 +69,7 @@ class LandAnimation:
             tup = tup + (each,)
         return tup
 
-def assembleLand():
+def assembleLand(land, plants, percent_list):
     pass
 
 if __name__ == '__main__':

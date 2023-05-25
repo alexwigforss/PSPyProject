@@ -56,6 +56,7 @@ def Set_land():
     land_y = float(input("Bredd (cm): "))
     land_name = input("Namnge odlingslandet: ")
     growing_area = Land(land_name, land_x, land_y)
+    return growing_area
 
 def Choose_plants(Try_name, Try_percentage):
     to_plant = []
@@ -87,6 +88,7 @@ def Set_distribution():
         else: continue
 
 if __name__ == '__main__':
+    import printgraph as pg
     # Odlingsutrymme
     growing_area = Set_land()
     # Växter och andel
@@ -95,7 +97,12 @@ if __name__ == '__main__':
     distribution_row = False #activate later: Set_distribution()
     # Gör beräkningar för fröer
     nr_of_seeds = calculations.NumberOfSeeds(chosen_plants, growing_area)
+    # {'name': 'morot', 'x': 4, 'y': 3, 'plant_month': 6, 'harvest_month': 9, 'mid_dist': 3.5, 'row_space': 12, 'scatter_space': 12.25}
+    pg.assembleLand(growing_area, chosen_plants, percent_list):
 
-                                                                # TODO escape-button för att avbryta programmet?        
+
+
+
+    # TODO escape-button för att avbryta programmet?    
 
     
