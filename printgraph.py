@@ -1,8 +1,8 @@
 # Skriv ut grafer månad för månad som ritar ut placering (utgå från spridd sådd) av rätt antal fröer, och när de ska skördas
 
-# Hitta frö med tidigast sådd, rita ut rätt antal av fröet i grafen 
+# Hitta frö med tidigast sådd, [rita ut rätt antal av fröet i grafen]
 
-# Hitta nästa frö-sådd, rita ut rätt antal
+# [Hitta nästa frö-sådd, rita ut rätt antal]
 
 # markera skördetid 
 
@@ -51,17 +51,16 @@ class LandAnimation:
         self.legend = plt.legend(bbox_to_anchor =(0.25, 1.15), ncol = 2)
         # https://www.w3schools.com/python/matplotlib_labels.asp
         self.title = plt.title("Namnet På Landet")
-        #https://datavizpyr.com/how-to-draw-a-rectangle-on-a-plot-in-matplotlib/
-        #https://www.statology.org/matplotlib-rectangle/
+        # https://datavizpyr.com/how-to-draw-a-rectangle-on-a-plot-in-matplotlib/
+        # https://www.statology.org/matplotlib-rectangle/
         self.ax.add_patch(plt.Rectangle((0, 0), self.land.height, self.land.width, fill = False),)
 
     def animate(self,i): # a.k.a update
         global size
-        # eftersom handtagens storlek 
         q = 0
         for each in self.ListOfPlants:
             if i < (self.plants[q].x)*10:
-                #print(self.plants[q].x)
+                # https://www.digitalocean.com/community/tutorials/numpy-ones-in-python
                 each.set_sizes(np.ones(self.qoute)*i)
             q += 1
         tup = self.line,self.title
@@ -69,6 +68,9 @@ class LandAnimation:
         for each in self.ListOfPlants:
             tup = tup + (each,)
         return tup
+
+def assembleLand():
+    pass
 
 if __name__ == '__main__':
     from plantclass import TestLand as tl
