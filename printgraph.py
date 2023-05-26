@@ -11,12 +11,23 @@ import matplotlib.pyplot as plt
 #import matplotlib.animation as animation
 from matplotlib.animation import FuncAnimation
 # from plantclass import TestLand as tl
+import calculations as calc
 
 # plt.ion()
 class LandAnimation:
     def __init__(self, land = '', plants=[],percent=[],rowdist=True):
+
         self.land = land
         self.qoute = len(plants)
+        self.qoutes = []
+        i = 0
+
+        for each in range(len(plants)):
+            q_ofplants = calc.num_to_range(percent[i],0,100,0.0,self.qoute)
+            normalized = calc.num_to_range(q_ofplants,0,len(plants),0.0,1)
+            self.qoutes.append(normalized)
+            i+=1
+
         # print('qoute = ', self.qoute)
         self.fig, self.ax = plt.subplots()
         self.line, = self.ax.plot(0, 0)
@@ -24,6 +35,7 @@ class LandAnimation:
         self.percent=percent
         self.ListOfPlants = []
         L_INDEX = 0
+        Y_START = 2
         for each in plants:
             if rowdist:
                 YSPACE = plants[L_INDEX].y
@@ -31,20 +43,25 @@ class LandAnimation:
             elif not rowdist:
                 YSPACE = plants[L_INDEX].mid_dist
                 XSPACE = plants[L_INDEX].mid_dist
-                # width = x = hori, height=y=vert
-            nr_of_hori=int(land.width/XSPACE) # rows
-            nr_of_vert=int(land.height/YSPACE/self.qoute) # cols
-            #nr_of_vert=int(land.height/YSPACE*self.percent[L_INDEX]) # cols
-            
-            #print('nr_of_vert ',nr_of_vert)
-            #print('YSpace: ' , YSPACE,'XSpace: ' , XSPACE)
+                # width = x = hori,     height = y = vert
 
-            Y_START = land.height/self.qoute*L_INDEX
+            nr_of_hori=int(land.width/XSPACE) # rows
+            nr_of_vert=int(land.height/YSPACE*self.qoutes[L_INDEX]) # cols
+            
+            #Y_START = land.height/self.qoute*L_INDEX #
+            #Y_START = land.height/self.qoutes[L_INDEX]*2
+
             y = np.full((nr_of_hori, nr_of_vert), 0)
+            print(self.plants[L_INDEX].name,YSPACE,end=' ')
+            
+            # Placerar ut växter i raderna
             for each in y:
-                each[:] = np.arange(Y_START + YSPACE/2, Y_START + YSPACE*nr_of_vert+(YSPACE/2), YSPACE, dtype=float)
-# width = x = hori, height=y=vert
+                each[:] = np.arange(Y_START + YSPACE/2, Y_START + (YSPACE*(nr_of_vert))+(YSPACE/2), YSPACE, dtype=float)
+            Y_START = (percent[L_INDEX]/100*land.height) # - ev korrigering YSPACE/2
+            print("Ystart: ",Y_START)
             x = np.full((nr_of_hori, nr_of_vert), 0)
+            
+            # Placerar ut växter i kolumner
             i = 1
             for each in x:
                 each[:]=XSPACE*i-XSPACE/2
@@ -62,11 +79,7 @@ class LandAnimation:
         # https://www.statology.org/matplotlib-rectangle/
         self.ax.add_patch(plt.Rectangle((0, 0), self.land.height, self.land.width, fill = False),)
 
-    def Calculate_plant_area(self, growing_area_y, number_of_seeds,plant):
-        seed_occupation_in_y = plant.mid_dist * number_of_seeds
-        occupation_in_percent = seed_occupation_in_y / growing_area_y
-        return occupation_in_percent
-
+# Gör att plantorna växer
     def animate(self,frame_nr): # a.k.a update
         q = 0
         for each in self.ListOfPlants:
@@ -74,20 +87,20 @@ class LandAnimation:
                 # https://www.digitalocean.com/community/tutorials/numpy-ones-in-python
                 each.set_sizes(np.ones(self.qoute)*frame_nr)
             q += 1
+
         tup = self.line,self.title
         # https://datagy.io/python-append-to-tuple/
         for each in self.ListOfPlants:
             tup = tup + (each,)
         return tup
-
-def assembleLand(land, complete_list, rowdist): #complete_list innehåller [ [PlantObjekt, int(antal_fröer)], [PlantObjekt, int(antal_ fröer)] ]
+    
+# Tar info från programkörningen
+def assembleLand(land, complete_list, rowdist):
     plant= []
     percent=[]
-    occupation_in_percent = []
     for each_plant in complete_list:
         plant.append(each_plant[0])
-        percent.append(each_plant[1]/100)        #procent av antal frön
-        occupation_in_percent.append(Calculate:)
+        percent.append(each_plant[1])        #procent av antal frön
     print(percent)
     la = LandAnimation(land,plant,percent,rowdist)
     ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50) # frames
@@ -96,6 +109,6 @@ def assembleLand(land, complete_list, rowdist): #complete_list innehåller [ [Pl
 if __name__ == '__main__':
     from plantclass import TestLand as tl
     from plantclass import Test_Database as tps
-    la = LandAnimation(tl,tps)
+    la = LandAnimation(tl,tps,50,False)
     ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50)
     plt.show()

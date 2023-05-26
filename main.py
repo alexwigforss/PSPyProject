@@ -91,7 +91,7 @@ if __name__ == '__main__':
     growing_area = plantclass.Land("test", 200, 300)
     plant1 = plantclass.Plant('gurka', 20, 30, 6, 10)
     plant2=plantclass.Plant('morot', 4, 30,  6, 9)
-    chosen_plants = [[plant1 , 25], [plant2, 75]] # procent
+    chosen_plants = [[plant1, 60], [plant2, 40]] # procent
     nr_of_seeds = [[plant1, 15], [plant2, 171]]   # antal
     distribution_row = False
     pg.assembleLand(growing_area, chosen_plants, distribution_row)
