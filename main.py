@@ -93,7 +93,7 @@ if __name__ == '__main__':
     import printgraph as pg
     ans = input("Ladda ner databasen? (y / n): ")
     if ans.lower() == "y":
-        article_pages = gatherlinks.Crawl_frontpages("https://www.impecta.se/sv/froer?page=1")
+        article_pages = gatherlinks.Crawl_frontpages()
         image_urls = collectimages(article_pages)
     else: image_urls = test_images
     # Odlingsutrymme
@@ -104,9 +104,6 @@ if __name__ == '__main__':
     distribution_row = Set_distribution()
     # Gör beräkningar för fröer
     nr_of_seeds = calculations.NumberOfSeeds(chosen_plants, growing_area)
-    print(f"growingarea: {growing_area.__dict__}") 
-    for each in chosen_plants:
-        print(f"plant: {each[0].__dict__}")
     pg.assembleLand(growing_area, chosen_plants, distribution_row)
 
     # TODO escape-button för att avbryta programmet?    

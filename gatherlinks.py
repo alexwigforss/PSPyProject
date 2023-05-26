@@ -5,7 +5,7 @@ def Get_fifty_articles(soup, start_url, article_pages):
     # Sorterar ut de 50 första artiklarna på översikssidan ( för att undvika dubbletter ur övriga erbjudanden på sidan)
     text_code = soup.findAll('h2', limit=50)
     for i in text_code:
-        name = i.contents[1].text
+        name = i.contents[0].text
         url = start_url+i.contents[1].attrs['href']
         article_pages[name] = url
 

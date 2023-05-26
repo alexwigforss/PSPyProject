@@ -47,7 +47,7 @@ class LandAnimation:
 
             nr_of_hori=int(land.width/XSPACE) # rows
             nr_of_vert=int(land.height/YSPACE*self.qoutes[L_INDEX]) # cols
-            print(f"{each.name} antal hori: {nr_of_hori}, antal vert: {nr_of_vert}")
+            print(f"{each.name} antal vert: {nr_of_hori}, antal hori: {nr_of_vert}")
             #Y_START = land.height/self.qoute*L_INDEX #
             #Y_START = land.height/self.qoutes[L_INDEX]*2
 

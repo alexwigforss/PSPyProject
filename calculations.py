@@ -55,5 +55,4 @@ def NumberOfSeeds(chosen_plants, growing_area):
 #Returnera del av range
 def num_to_range(num, inMin, inMax, outMin, outMax):
     result = outMin + (float(num - inMin) / float(inMax - inMin) * (outMax - outMin))
-    print(result)
     return result
