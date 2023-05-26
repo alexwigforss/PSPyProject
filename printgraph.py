@@ -112,3 +112,4 @@ if __name__ == '__main__':
     la = LandAnimation(tl,tps,50,False)
     ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50)
     plt.show()
+    #
