@@ -47,11 +47,12 @@ class LandAnimation:
 
             nr_of_hori=int(land.width/XSPACE) # rows
             nr_of_vert=int(land.height/YSPACE*self.qoutes[L_INDEX]) # cols
-            
+            print(f"{each.name} antal hori: {nr_of_hori}, antal vert: {nr_of_vert}")
             #Y_START = land.height/self.qoute*L_INDEX #
             #Y_START = land.height/self.qoutes[L_INDEX]*2
 
             y = np.full((nr_of_hori, nr_of_vert), 0)
+            #print(self.plants[L_INDEX].name,YSPACE,end=' ')
             #print(self.plants[L_INDEX].name,YSPACE,end=' ')
             
             # Placerar ut växter i raderna
@@ -101,7 +102,6 @@ def assembleLand(land, complete_list, rowdist):
     for each_plant in complete_list:
         plant.append(each_plant[0])
         percent.append(each_plant[1])        #procent av antal frön
-    #print(percent)
     la = LandAnimation(land,plant,percent,rowdist)
     ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50) # frames
     plt.show()

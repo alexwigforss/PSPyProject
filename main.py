@@ -1,6 +1,8 @@
 # > pip install beautifulsoup4
 # > pip install opencv-python
 # > pip install numpy
+# > pip install matplotlib
+# > pip install pytesseract
 
 import plantclass
 import calculations
@@ -88,6 +90,23 @@ def Set_distribution():
 
 if __name__ == '__main__':
     import printgraph as pg
+    # Odlingsutrymme
+    growing_area = Set_land()
+    # Växter och andel
+    chosen_plants = Choose_plants(Try_name, Try_percentage) #[Plant-object, procentmängd]
+    # Fördelningssätt
+    distribution_row = Set_distribution()
+    # Gör beräkningar för fröer
+    nr_of_seeds = calculations.NumberOfSeeds(chosen_plants, growing_area)
+    # {'name': 'morot', 'x': 4, 'y': 3, 'plant_month': 6, 'harvest_month': 9, 'mid_dist': 3.5, 'row_space': 12, 'scatter_space': 12.25}
+    # TODO Ev Skriva ut hur många fröer nr_of_seeds[x][1]
+    print(f"growingarea: {growing_area.__dict__}") 
+    for each in chosen_plants:
+        print(f"plant: {each[0].__dict__}")
+    pg.assembleLand(growing_area, chosen_plants, distribution_row)
+
+    # TODO escape-button för att avbryta programmet?    
+'''
     growing_area = plantclass.Land("test", 200, 300)
     plant1 = plantclass.Plant('gurka', 20, 30, 6, 10)
     plant2=plantclass.Plant('morot', 4, 30,  6, 9)
@@ -95,17 +114,4 @@ if __name__ == '__main__':
     nr_of_seeds = [[plant1, 15], [plant2, 171]]   # antal
     distribution_row = False
     pg.assembleLand(growing_area, chosen_plants, distribution_row)
-'''    # Odlingsutrymme
-    growing_area = Set_land()
-    # Växter och andel
-    chosen_plants = Choose_plants(Try_name, Try_percentage) #[Plant-object, procentmängd]
-    # Fördelningssätt
-    distribution_row = True #activate later: Set_distribution()
-    # Gör beräkningar för fröer
-    nr_of_seeds = calculations.NumberOfSeeds(chosen_plants, growing_area)
-    # {'name': 'morot', 'x': 4, 'y': 3, 'plant_month': 6, 'harvest_month': 9, 'mid_dist': 3.5, 'row_space': 12, 'scatter_space': 12.25}
-    # TODO Ev Skriva ut hur många fröer nr_of_seeds[x][1]
-    pg.assembleLand(growing_area, nr_of_seeds, distribution_row)
-
-    # TODO escape-button för att avbryta programmet?    
-'''
+'''    
