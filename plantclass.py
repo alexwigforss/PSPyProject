@@ -1,16 +1,3 @@
-# klass för varje frösort med: 
-#       Plantnamn (finns som key i dictionaryt)
-#        Radavstånd (y)
- #       Plantavstånd (x)
-  #      Medelavstånd
-   #     Såtid (första månad)
-    #    Skördetid (första månad)
-#    Senare alternativ:
- #       Portionsmängd
-  #      Perenn/ettårig
-   #     (Grotid)
-    #    (Grobarhet)
-
 class Plant:    
     def __init__(self, name, x_dist_cm, y_row_cm, plant_month, harvest_month):
         self.name = name
