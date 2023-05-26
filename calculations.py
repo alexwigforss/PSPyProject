@@ -18,7 +18,7 @@ def Get_plant_space(plant, growing_area, row):
     y_in_percent = seed_occupation_in_y / growing_area.height
     return {'seeds_in_x':seed_occupation_in_x, 'seeds_in_y': seed_occupation_in_y, 'seed_percent_of_xspace':x_in_percent,'seed_percent_of_yspace':y_in_percent}
 
-def GetNumberOfSeeds(plant, percentage, growing_area): #med distribution_rows = False
+def GetNumberOfSeeds(plant, percentage, growing_area, row): #med distribution_rows = False
 #Skriv om räknetal
     percent = percentage/100 #0.4
 #Antal beräknas på X och Y oavsett dist_row
