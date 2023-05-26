@@ -18,8 +18,11 @@ class LandAnimation:
     def __init__(self, land = '', plants=[],percent=[],rowdist=True):
 
         self.land = land
+        self.plants = plants
+        self.percent=percent
         self.qoute = len(plants)
         self.qoutes = []
+        self.ListOfPlants = []
         i = 0
 
         for each in range(len(plants)):
@@ -31,9 +34,6 @@ class LandAnimation:
         # print('qoute = ', self.qoute)
         self.fig, self.ax = plt.subplots()
         self.line, = self.ax.plot(0, 0)
-        self.plants = plants
-        self.percent=percent
-        self.ListOfPlants = []
         L_INDEX = 0
         Y_START = 2
         for each in plants:
@@ -52,13 +52,13 @@ class LandAnimation:
             #Y_START = land.height/self.qoutes[L_INDEX]*2
 
             y = np.full((nr_of_hori, nr_of_vert), 0)
-            print(self.plants[L_INDEX].name,YSPACE,end=' ')
+            #print(self.plants[L_INDEX].name,YSPACE,end=' ')
             
             # Placerar ut växter i raderna
             for each in y:
                 each[:] = np.arange(Y_START + YSPACE/2, Y_START + (YSPACE*(nr_of_vert))+(YSPACE/2), YSPACE, dtype=float)
             Y_START = (percent[L_INDEX]/100*land.height) # - ev korrigering YSPACE/2
-            print("Ystart: ",Y_START)
+            #print("Ystart: ",Y_START)
             x = np.full((nr_of_hori, nr_of_vert), 0)
             
             # Placerar ut växter i kolumner
@@ -101,7 +101,7 @@ def assembleLand(land, complete_list, rowdist):
     for each_plant in complete_list:
         plant.append(each_plant[0])
         percent.append(each_plant[1])        #procent av antal frön
-    print(percent)
+    #print(percent)
     la = LandAnimation(land,plant,percent,rowdist)
     ani = FuncAnimation(la.fig, la.animate, interval=20, blit=True, save_count=50) # frames
     plt.show()
