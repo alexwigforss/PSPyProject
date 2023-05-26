@@ -1,13 +1,12 @@
 #from main import test_links
 import requests
 from bs4 import BeautifulSoup
-from gatherlinks import *
+#from gatherlinks import *
 
 if __name__ == "__main__":
-    start_url = "https://www.impecta.se"
-    image_url = {}
 
     def Scrape_picture(article_page):
+        start_url = "https://www.impecta.se"
         url = "NotFound"
     # läs in websidans hela html-kod och lagra i soup med standard-parser
         page_html = requests.get(article_page) 
@@ -23,8 +22,10 @@ if __name__ == "__main__":
         return url
 
     # Hämta artikelsida och artikelnamn ur gatherlinks-samlingen
-    def Get_article(url):
+    def Get_article(article_pages):
+        image_url = {}
         for key, value in article_pages.items():
             image_url[key] = Scrape_picture(value)
+        return image_url
 
 

@@ -6,8 +6,10 @@
 
 import plantclass
 import calculations
+import gatherlinks
+import collectimages
 
-
+#Byt ur mot image_urls
 test_images = {"Slanggurka 'Beth Alpha'": "https://www.impecta.se/bilder/artiklar/zoom/9145_3.jpg", 
                "Höstmorot 'De Saint-Valery'": "https://www.impecta.se/bilder/artiklar/zoom/9396_3.jpg", 
                "Gråsockerärt 'Lokförare Bergfälts Jätteärt'":"https://www.impecta.se/bilder/artiklar/zoom/10221_3.jpg", 
@@ -60,7 +62,6 @@ def Set_land():
     land_name = input("Namnge odlingslandet: ")
     return plantclass.Land(land_name, land_x, land_y)
 
-
 def Choose_plants(Try_name, Try_percentage):
     to_plant = []
     print("Nu ska du få ange vilka sorts växter du vill odla och hur mycket av varje sort i procent")
@@ -90,6 +91,11 @@ def Set_distribution():
 
 if __name__ == '__main__':
     import printgraph as pg
+    ans = input("Ladda ner databasen? (y / n): ")
+    if ans.lower() == "y":
+        article_pages = gatherlinks.Crawl_frontpages("https://www.impecta.se/sv/froer?page=1")
+        image_urls = collectimages(article_pages)
+    else: image_urls = test_images
     # Odlingsutrymme
     growing_area = Set_land()
     # Växter och andel
@@ -98,8 +104,6 @@ if __name__ == '__main__':
     distribution_row = Set_distribution()
     # Gör beräkningar för fröer
     nr_of_seeds = calculations.NumberOfSeeds(chosen_plants, growing_area)
-    # {'name': 'morot', 'x': 4, 'y': 3, 'plant_month': 6, 'harvest_month': 9, 'mid_dist': 3.5, 'row_space': 12, 'scatter_space': 12.25}
-    # TODO Ev Skriva ut hur många fröer nr_of_seeds[x][1]
     print(f"growingarea: {growing_area.__dict__}") 
     for each in chosen_plants:
         print(f"plant: {each[0].__dict__}")
