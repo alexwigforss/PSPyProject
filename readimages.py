@@ -24,7 +24,7 @@ def downloadImgs():
             print('Image sucessfully Downloaded: ',fname ,e)
         else:
             print('Image Couldn\'t be retrieved: ',res.status_code,e)
-# downloadImgs()
+#downloadImgs()
 
 import os
 list_of_paths = []
@@ -73,6 +73,7 @@ def createOrFlushFile(fname):
 def getChars(contours, im2, filename):
     # createOrFlushFile(filename) # Uncoment to empty files before writing
     file = open('./text/'+filename, "a",encoding='utf8')
+    #file = open('./text/'+filename, "a",encoding='utf8')
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)
     # Cropping the text block for giving input to OCR

@@ -1,37 +1,47 @@
 from readimages import getTxtFileNames as gtf
 import os
+from main import test_images as ti
 longpath = os.getcwd() + '\\' + 'text\\'
 path = '.\\text\\'
 textfiles = gtf()
 listoflines = []
 lines = ''
+
 for e in textfiles:
-    print(path + e)
+   # print(path + e)
     with open(path + e, encoding='utf-8') as f:
         listoflines.append(f.read())
 
 nextValue = False
 label_list = ['grobarhet:','Radavstand:','Plantavstand:','SkOrdas:','Portion:','Satid:']
+
+listofdicts = []
+thedict = {}
+names = []
+for key in ti.keys():
+    names.append(key)
+#print(names)
+i=0
 for text in listoflines:
+    print(textfiles[i].split('_')[0])
+    thedict['name']=names[i]
     for word in enumerate(text.split()):
+        
         if nextValue:
             print(label,word[1])
+            thedict[label]=word[1]
 
         if word[1] in label_list:
-            label = word[1][0:4]
+            label = word[1]
             nextValue = True
         else:
             nextValue = False
+    i += 1
     print()
-
-thisdict = {
-  "grobarhet": 0,
-  "Radavstand": 0,
-  "Plantavstand": 0,
-  "SkOrdas": "unset",
-  "Portion": 0,
-  "Satid": "unset",
-}
+    #print(thedict)
+    #print()
+    #listofdicts.append(thedict)
+#print(listofdicts)
 
 """
 grobarhet: 75%
